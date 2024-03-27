@@ -1,0 +1,21 @@
+
+
+
+
+entity Temperature {
+	temperature Double
+}
+
+entity Weather {
+	wid Integer required unique
+	date LocalDate
+    lat BigDecimal
+    lon BigDecimal
+    city String
+    temperature Temperature
+}
+
+relationship OneToMany {
+	Weather{temperature} to Temperature{json}
+}
+
