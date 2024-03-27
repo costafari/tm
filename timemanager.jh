@@ -1,0 +1,101 @@
+
+application {
+  config {
+    baseName TimeManager
+    applicationType monolith
+    packageName sv.com.htc
+    authenticationType jwt
+    prodDatabaseType postgresql
+    clientFramework angularX
+  }
+  entities *
+}
+
+entity Iteracion {
+	id Long
+    nombre String
+}
+
+entity Size {
+	id Long
+    type String
+    value Integer
+}
+
+entity Responsibility {
+	id Long
+    responsibility String
+}
+
+entity Epica {
+	id Long
+    nombre String
+}
+
+entity HU {
+	id Long
+    nombre String
+    descripcion String
+}
+
+entity Backlog {
+	id Long
+    release Integer
+    sprint Iteracion
+    duracion Integer
+    epica Epica
+    talla Size
+    puntos Integer
+    total Integer
+    orden Integer
+    hu HU
+    nombre String
+}
+
+entity Sprint {
+	id Long
+    hu HU
+    refinar Boolean
+    codigo Integer
+    actividad String
+    estimacion Integer
+    tipo Type
+    secuencia Integer
+    status Status
+    responsable Responsibility
+}
+
+enum Process {
+	Analysis, Design, Implementation, Test_Unit, QA, UAT, Operation, Maintenance,
+	Disposal, Issues, Documentation, Training, Middleware_Support, Infrastructure_Support,
+	Support_DBA, Support, NOC, Software_Factory
+}
+
+enum Stage {
+	Infraestructure, Frontend, Frontend_Web, Frontend_Mobile, Backend, Backend_Java,
+	Backend_PHP, Arquitecture, Analysis, Design, Research, Documentation, QA Testing,
+	Unit_Testing, Management, BI, DB, Applications
+}
+
+enum Type {
+	TASK, SUBTASK
+}
+
+enum Status {
+	TODO, DESIGN, IMPLEMENTATION, QA, UAT, DONE, NEW,
+	IN_PROGRESS, COMPLETED, REFACTOR, PAUSE, OPEN,
+	CLOSE, N_A
+}
+
+enum Severity {
+	LOW, MEDIUM, HIGH
+}
+
+relationship OneToMany {
+  Iteracion to Backlog{iteracion}
+  Epica to Backlog{epica}
+  Size to Backlog{size}
+  HU to Backlog{hu}
+  HU to Sprint{hu}
+  Responsibility to Sprint{responsibility}
+}
